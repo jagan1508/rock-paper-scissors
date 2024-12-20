@@ -7,13 +7,11 @@ function getComputerChoice(){
     return option;
 }
 
-function getHumanChoice(){
-    let hip=prompt("Enter your choice ");
-    return hip.toLowerCase();
-
-}
+let computerScore = 0;
+let humanScore = 0;
 
 function playRound(humanChoice,compChoice){
+    let winner='';
     if(humanChoice=="rock"){
         if(compChoice=="paper"){
             computerScore++;
@@ -52,22 +50,30 @@ function playRound(humanChoice,compChoice){
     alert("Round winner is "+ winner);
 }
 
-let winner="";
-let humanScore=0;
-let computerScore=0;
-for(let i=0;i<5;i++){
-    alert("Round "+(i+1));
-    let comp_ip=getComputerChoice();
-    console.log(comp_ip);
-    let human_ip=getHumanChoice();
-    console.log(human_ip);
-    playRound(human_ip,comp_ip);
-    console.log("Human: "+ humanScore);
-    console.log("Computer: "+ computerScore);
+function startGame(){
+    const btns=document.querySelectorAll("button");
+    btns.forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            btntext=btn.textContent.toLowerCase();
+            alert("Your have choosed " +btntext);
+            let cch=getComputerChoice();
+            let hch=btntext;
+            alert("Computer chose: "+cch);
+            playRound(hch,cch);
+            alert(`Scores: Human - ${humanScore}, Computer - ${computerScore}`);
+            if(humanScore==5){
+                alert("Human won ");
+                humanScore=0;
+                computerScore=0;
+                alert("Game reseted");
+            }
+            else if (computerScore==5){
+                alert("Computer Won");
+                humanScore=0;
+                computerScore=0;
+                alert("Game reseted");
+            }
+        })
+    })
 }
-if(humanScore>computerScore){
-    alert("Human Won");
-}
-else if(computerScore>humanScore){
-    alert("Computer Won")
-}
+startGame();
